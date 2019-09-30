@@ -1,18 +1,43 @@
-var sensorRouter = require('./routes/sensors');
-var userRouter = require('./routes/users');
-var connect = require('./schemas')
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan'); //logger
+const session = require('express-session');
+require('dotenv').config(); // .env 사용
 
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
+const { sequelize } = require('./models'); //require시 폴더이름을 지정하면 index.js생략 가능
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use('/users', userRouter);
-app.use('/sensors', sensorRouter);
+const app = express();
+sequelize.sync();
 
-connect();
+app.set('port', process.env.PORT || 8080);
 
-var port = process.env.PORT || 8080
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(session({
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.COOKIE_SECRET,
+    cookie: {
+        httpOnly: true,
+        secure: false
+    }
+}));
 
-var server = app.listen(port, () => console.log(`Express server has started on port ${port}`))
+app.use((req, res, next) => {
+    const err = new Error('not found');
+    err.status = 404;
+    next(err);
+});
+
+app.use((err, req, res) => {
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    res.status(err.status || 500);
+    res.render('error');
+})
+
+app.listen(app.get('port'), () => {
+    console.log(app.get('port'), '번 포트에서 대기 중');
+});
