@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('./index');
+const { sequelize } = require('./index');
 
 class Sensor extends Model {}
 Sensor.init({

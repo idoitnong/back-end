@@ -4,7 +4,7 @@ const morgan = require('morgan'); //logger
 const session = require('express-session');
 require('dotenv').config(); // .env 사용
 
-const sequelize = require('./models'); //require시 폴더이름을 지정하면 index.js생략 가능
+const { sequelize } = require('./models'); //require시 폴더이름을 지정하면 index.js생략 가능
 
 const app = express();
 sequelize.sync();
