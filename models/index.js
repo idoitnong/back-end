@@ -3,17 +3,17 @@ const Sequelize = require('sequelize');
 
 const env = process.env.NODE_ENV || 'development';
 const config = require(path.join(__dirname, '..', 'config', 'config.js'))[env];
-const db = {};
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+module.exports.sequelize = sequelize;
 
-db.User = require('./user')(sequelize, Sequelize);
-db.Sensor = require('./sensor')(sequelize, Sequelize);
+// model initialize
+const User = require('./user');
+const Sensor = require('./sensor');
 
-db.User.hasMany(db.Sensor, { foreignKey: 'ownerId', sourceKey: 'id' });
-db.Sensor.belongsTo(db.User, { foreignKey: 'ownerId', sourceKey: 'id' });
+User.hasMany(Sensor, { foreignKey: 'ownerId', sourceKey: 'id' });
+Sensor.belongsTo(User, { foreignKey: 'ownerId', sourceKey: 'id' });
 
-module.exports = db;
+module.exports.User = User;
+module.exports.Sensor = Sensor;
