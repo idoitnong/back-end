@@ -1,21 +1,21 @@
 {
-  "name": "web-api",
+  "name": "back-end",
   "version": "1.0.0",
-  "description": "",
+  "description": "Web-API",
   "main": "index.js",
   "scripts": {
     "start": "nodemon app"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/idoitnong/Web-API.git"
+    "url": "git+https://github.com/idoitnong/back-end.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/idoitnong/Web-API/issues"
+    "url": "https://github.com/idoitnong/back-end/issues"
   },
-  "homepage": "https://github.com/idoitnong/Web-API#readme",
+  "homepage": "https://github.com/idoitnong/back-end#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
