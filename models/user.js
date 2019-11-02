@@ -21,14 +21,14 @@ User.init({
         allowNull: false,
         unique: true
     },
-    APIKey: {
+    apiKey: {
         type: DataTypes.STRING(32),
         allowNull: false
     },
 }, {
-  sequelize,
-  modelName: 'user',
-  timestamps: true
+    timestamps: true,
+    sequelize,
+    modelName: 'user'
 });
 
 module.exports = User;

@@ -1,18 +1,14 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('./index');
 
-class Sensor extends Model {}
-Sensor.init({
-    order: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-    },
-    userId: {
+class SensorValue extends Model {}
+SensorValue.init({
+    sensorId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    sensorName: {
-        type: DataTypes.STRING(20),
+    value: {
+        type: DataTypes.FLOAT,
         allowNull: false
     },
     createdAt: {
@@ -23,7 +19,7 @@ Sensor.init({
 }, {
     timestamps: false,
     sequelize,
-    modelName: 'sensor'
+    modelName: 'sensorValue'
 });
 
-module.exports = Sensor;
+module.exports = SensorValue;

@@ -6,6 +6,10 @@ require('dotenv').config(); // .env 사용
 
 const { sequelize } = require('./models'); //require시 폴더이름을 지정하면 index.js생략 가능
 
+const authRouter = require('./routes/auth');
+const userRouter = require('./routes/users');
+const sensorRouter = require('./routes/sensors');
+
 const app = express();
 sequelize.sync();
 
@@ -24,6 +28,10 @@ app.use(session({
         secure: false
     }
 }));
+
+app.use('/auth', authRouter);
+app.use('/users', userRouter);
+app.use('/sensors', sensorRouter);
 
 app.use((req, res, next) => {
     const err = new Error('not found');

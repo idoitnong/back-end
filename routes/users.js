@@ -1,28 +1,40 @@
-var express = require('express');
-var User = require('../schemas/user');
+const express = require('express');
+const { User } = require('../models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
-var router = express.Router();
+const router = express.Router();
 
 router.get('/', async(req, res, next) => {
     try {
-        const users = await User.find();
-        res.json(users)
+        const users = await User.findAll({ });
+        res.status(200).json(users);
+        console.log('zzzz');
     } catch (e) {
         console.error(e);
+        console.log("asdf");
         next(e);
     }
 });
 
 router.post('/', async(req, res, next) => {
-    const user = new User({
-        username: req.body.username,
-        password: req.body.password,
-        realName: req.body.real_name,
-        phoneNumber: req.body.phone_number
-    });
+    const { username, password, realName, phoneNumber } = req.body;
 
     try {
-        const result = await user.save();
+        const exUser = await User.findOne({
+            where: {
+                [Op.or]: [{username}, {phone_number: phoneNumber}]
+            }
+        });
+        if (exUser) {
+            res.status(400).json({ message: '이미 가입 된 유저 입니다.' })
+        }
+        const result = await User.create({
+            username,
+            password,
+            real_name: realName,
+            phone_number: phoneNumber
+        });
         res.status(201).json(result)
     } catch (e) {
         console.error(e);
