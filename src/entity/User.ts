@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  ManyToMany,
-  JoinTable,
-  PrimaryGeneratedColumn,
-  OneToMany
-} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Sensor } from "./Sensor";
 
 @Entity()
@@ -32,10 +25,16 @@ export class User {
   })
   phoneNumber: string;
 
-  @Column("datetime")
+  @Column({
+    type: "datetime",
+    default: () => "now()"
+  })
   createdAt: Date;
 
-  @Column("datetime")
+  @Column({
+    type: "datetime",
+    default: () => "now()"
+  })
   updatedAt: Date;
 
   @OneToMany(
@@ -43,4 +42,11 @@ export class User {
     sensor => sensor.user
   )
   sensors: Sensor[];
+
+  load(args: any) {
+    this.username = args.username;
+    this.password = args.password;
+    this.realName = args.realName;
+    this.phoneNumber = args.phoneNumber;
+  }
 }
