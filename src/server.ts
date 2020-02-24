@@ -2,10 +2,7 @@ import errorHandler from "errorhandler";
 
 import app from "./app";
 import { ApolloServer } from "apollo-server-express";
-import {
-  resolvers as UsersResolvers,
-  typeDefs as UsersTypeDefs
-} from "./graphql/users";
+import { schema } from "./graphql/schema";
 
 /**
  * Error Handler. Provides full stack - remove for production
@@ -16,10 +13,7 @@ import {
  * Start Express server.
  */
 
-const apollo = new ApolloServer({
-  typeDefs: [UsersTypeDefs],
-  resolvers: [UsersResolvers]
-});
+const apollo = new ApolloServer({ schema });
 apollo.applyMiddleware({ app });
 const server = app.listen(app.get("port"), () => {
   console.log(

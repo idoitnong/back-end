@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  CreateDateColumn
+} from "typeorm";
 import { Sensor } from "./Sensor";
 
 @Entity()
@@ -9,7 +15,7 @@ export class SensorValue {
   @Column()
   value: number;
 
-  @Column("datetime")
+  @CreateDateColumn()
   createdAt: Date;
 
   @ManyToOne(

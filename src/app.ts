@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import express from "express";
-import morgan from "morgan"; // logger
+// import morgan from "morgan"; // logger
 import "dotenv/config";
 
 import * as homeController from "./controllers/home";
@@ -16,7 +16,7 @@ createConnection()
 
 app.set("port", process.env.PORT || 3000);
 
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.get("/", homeController.index);

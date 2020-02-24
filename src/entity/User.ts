@@ -1,8 +1,24 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn
+} from "typeorm";
 import { Sensor } from "./Sensor";
 
 @Entity()
 export class User {
+  static CreateUser(args: any) {
+    const user = new User();
+    user.username = args.username;
+    user.password = args.password;
+    user.realName = args.realName;
+    user.phoneNumber = args.phoneNumber;
+    return user;
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,16 +41,10 @@ export class User {
   })
   phoneNumber: string;
 
-  @Column({
-    type: "datetime",
-    default: () => "now()"
-  })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column({
-    type: "datetime",
-    default: () => "now()"
-  })
+  @UpdateDateColumn()
   updatedAt: Date;
 
   @OneToMany(
@@ -42,11 +52,4 @@ export class User {
     sensor => sensor.user
   )
   sensors: Sensor[];
-
-  load(args: any) {
-    this.username = args.username;
-    this.password = args.password;
-    this.realName = args.realName;
-    this.phoneNumber = args.phoneNumber;
-  }
 }
