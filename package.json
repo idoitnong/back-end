@@ -25,13 +25,17 @@
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
     "luxon": "^1.24.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
     "@types/errorhandler": "^1.5.0",
     "@types/luxon": "^1.22.0",
     "@types/morgan": "^1.9.0",
+    "@types/node": "^14.0.13",
     "@typescript-eslint/parser": "^2.31.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
