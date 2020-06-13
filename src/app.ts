@@ -44,9 +44,10 @@ const doStuff = async () => {
         Buffer.from(message.toJSON().data).toString("utf-8")
       );
 
-      console.log(`topic: ${topic}, date: ${DateTime.local().toString()}`);
-      // TODO DB에 데이터 저장
-      console.log(parsedMessage);
+      console.log(
+        `topic: ${topic}, ${parsedMessage}, date: ${DateTime.local().toString()}`
+      );
+      topicController.savePayload(topic, parsedMessage);
     });
 
     await client.subscribe("uuid/#");
@@ -66,6 +67,6 @@ client.on("connect", doStuff);
 app.get("/", homeController.index);
 app.get("/topics", topicController.getTopics);
 app.post("/topics", topicController.postTopics);
-//app.post("/topics", topicController.postTopic);
+app.get("/test", topicController.test);
 
 export default app;
