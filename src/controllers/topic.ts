@@ -1,6 +1,6 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
-import { Topic, Value } from "../entity";
+import { Topic, Payload } from "../entity";
 
 /**
  * GET /topics
@@ -36,20 +36,20 @@ export const postTopics = async (req: Request, res: Response) => {
 /**
  * Topic의 Payload 저장
  */
-export const savePayload = async (topic: string, payload: number) => {
-  let value = new Value();
-  value.value = payload;
+export const savePayload = async (topic: string, value: number) => {
+  let payload = new Payload();
+  payload.value = value;
 
   let topicRepository = getRepository(Topic);
-  let valueRepository = getRepository(Value);
+  let payloadRepository = getRepository(Payload);
 
   const tid = await topicRepository.findOne({
     where: { name: topic },
   });
 
   console.log(tid);
-  value.topic = tid;
-  let result = await valueRepository.save(value);
+  payload.topic = tid;
+  let result = await payloadRepository.save(payload);
 
   return result;
 };
@@ -58,11 +58,9 @@ export const savePayload = async (topic: string, payload: number) => {
  * 센서 값 불러오기 테스트
  */
 export const test = async (req: Request, res: Response) => {
-  let value = new Value();
+  let payloadRepository = getRepository(Payload);
 
-  let valueRepository = getRepository(Value);
-
-  let result = await valueRepository
+  let result = await payloadRepository
     .createQueryBuilder("value")
     .leftJoin("value.topic", "topic")
     .addSelect(["topic.name"])

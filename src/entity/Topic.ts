@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   OneToMany,
 } from "typeorm";
-import { Value } from "./";
+import { Payload } from "./";
 
 @Entity()
 export class Topic {
@@ -23,8 +23,8 @@ export class Topic {
   })
   label: string;
 
-  @OneToMany((type) => Value, (value) => value.topic)
-  values: Value[];
+  @OneToMany((type) => Payload, (payload) => payload.topic)
+  payloads: Payload[];
 
   @CreateDateColumn({
     name: "created_at",

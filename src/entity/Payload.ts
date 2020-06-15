@@ -5,17 +5,17 @@ import {
   ManyToOne,
   CreateDateColumn,
 } from "typeorm";
-import { Topic } from "./";
+import { Topic } from ".";
 
 @Entity()
-export class Value {
+export class Payload {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: "float" })
   value: number;
 
-  @ManyToOne((type) => Topic, (topic) => topic.values)
+  @ManyToOne((type) => Topic, (topic) => topic.payloads)
   topic: Topic;
 
   @CreateDateColumn({
